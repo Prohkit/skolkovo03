@@ -25,4 +25,4 @@ public:
     void setCyclicDependencyFlag(bool b);
 };
 
-#endif //UNTITLED_CALCULATION_PATH_H
+#endif

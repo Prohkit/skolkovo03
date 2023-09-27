@@ -11,7 +11,10 @@ namespace csv {
     using cell_data_t = std::string;
     using table_t = std::map<cell_address_t, cell_data_t>;
 
-    struct ComplexCell;
+    struct ComplexCell {
+        std::string firstArg;
+        std::string secondArg;
+    };
 
     std::vector<calculation_path>
     find_loops(const calculation_path &calculationPath, const table_t &csv);
@@ -23,4 +26,4 @@ csv::table_t get_table(const std::string &path);
 std::vector<std::vector<std::string>> remove_duplicates(const std::vector<calculation_path> &pathsLoopedVector);
 
 
-#endif //UNTITLED_CYCLIC_DEPENDENCIES_API_H
+#endif

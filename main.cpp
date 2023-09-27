@@ -13,12 +13,12 @@ int main(int argc, char *argv[])
     auto tableIterator = table.begin();
     for (int i = 0; tableIterator != table.end(); tableIterator++, i++) {
 
-        //tableIterator->first - адрес текущей ячейки, tableIterator->second - адрес следующей ячейки
+        // tableIterator->first - адрес текущей ячейки, tableIterator->second - адрес следующей ячейки
         std::string currentCell(tableIterator->first);
         std::string nextCell(tableIterator->second);
         nextCell = remove_equal_char(nextCell);
 
-        //пропускаю ячейки с числами
+        // пропускаю ячейки с числами
         if (!((nextCell[0] != '=') & !isdigit(nextCell[0])) || isdigit(nextCell[0]) || currentCell.empty()
         || nextCell.empty()) {
             continue;
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         calculation_path calculationPath{path, visited};
         std::vector<calculation_path> paths;
 
-        //поиск циклов, запись путей с циклической зависимостью в итоговый вектор
+        // поиск циклов, запись путей с циклической зависимостью в итоговый вектор
         paths = csv::find_loops(calculationPath, table);
         for (const auto &item: paths) {
             if (item.isCyclicDependency()) {
@@ -38,15 +38,25 @@ int main(int argc, char *argv[])
         }
     }
 
-    //убрать повторяющиеся циклы, обрезать пути до мест зацикливания
-    std::vector<std::vector<std::string>> toDisplay = remove_duplicates(pathsLoopedVector);
-
-    //вывести на экран
-    for (const auto &item: toDisplay) {
-        for (const auto &vector: item) {
-            std::cout << vector << " ";
+    // вывести на экран все возможные пути с циклами
+    int count = 0;
+    for (int i = 0; i < pathsLoopedVector.size(); ++i) {
+        for (int j = 0; j < pathsLoopedVector[i].getPath().size(); ++j) {
+            std::cout << pathsLoopedVector[i].getPath()[j] << " ";
         }
+        count++;
         std::cout << std::endl;
     }
-    return 0;
+    std::cout << count;
+
+    // убрать повторяющиеся циклы, обрезать пути до мест зацикливания, вывести на экран
+//    std::vector<std::vector<std::string>> toDisplay = remove_duplicates(pathsLoopedVector);
+//
+//    for (const auto &item: toDisplay) {
+//        for (const auto &vector: item) {
+//            std::cout << vector << " ";
+//        }
+//        std::cout << std::endl;
+//    }
+//    return 0;
 }
